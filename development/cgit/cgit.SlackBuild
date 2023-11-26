@@ -102,7 +102,7 @@ rm -fR git
 tar xvf $CWD/git-$GIT_VERSION.tar.?z*
 mv git-* git
 
-make LUA_PKGCONFIG=luajit
+make -j4 LUA_PKGCONFIG=luajit
 make install DESTDIR=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
