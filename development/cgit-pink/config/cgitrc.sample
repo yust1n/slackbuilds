@@ -2,28 +2,52 @@
 # you can see a demo here http://cgit.ponce.cc/
 # For more options, see cgitrc.5.txt in the docs folder
 
-root-title=ponce's repository browser
+root-title=15.0 repository browser
 root-desc=a fast interface to these git repositories
 virtual-root=/
 snapshots=tar.gz
+# more than 1 branch in summary
+enable-remote-branches=1
 branch-sort=age
+
+summary-branches=10
+summary-log=10
+summary-tags=10
+
+repository-sort=date
+commit-sort=date
+
+#cache-size=1000
+enable-index-links=1
+enable-commit-graph=1
+enable-follow-links=1
+enable-log-filecount=1
+enable-log-linecount=1
+max-stats=quarter
+
 # for this to work you have to build cgit against lua
 # and install luacrypto too.
 # you wull have also to add email-gravatar-sbo-additions.css
 # at the bottom of your installed cgit.css
-email-filter=lua:/usr/share/cgit/filters/email-gravatar-sbo.lua
+#email-filter=lua:/usr/share/cgit/filters/email-gravatar-sbo.lua
 
-#css=/cgit.css
-#logo=/cgit.png
+css=/cgit.css
+logo=/cgit.png
 
-# repository specific data
-repo.url=slackbuilds
-repo.path=/path/to/repo/.git
-repo.desc=slackbuilds.org fork for slackware-current
-repo.owner=my.address _at_ my.isp
-# the default branch here is set to current (default if omitted is master)
-repo.defbranch=current
-repo.clone-url=git://github.com/Ponce/slackbuilds.git
+enable-git-config=1
+
+## repository specific data
+#repo.url=slackbuilds
+#repo.path=/path/to/repo/.git
+#repo.desc=slackbuilds.org fork for slackware-current
+#repo.owner=my.address _at_ my.isp
+## the default branch here is set to current (default if omitted is master)
+#repo.defbranch=current
+#repo.clone-url=git://github.com/Ponce/slackbuilds.git
 
 # if you need to display other repositories you can more config blocks
 # like the one above
+
+remove-suffix=1
+scan-path=/var/www/cgi-bin/cgit/
+
