@@ -127,5 +127,7 @@ chmod 775 $PKG/var/cache/cgit
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
+find $PKG/usr/share/man/ -type f -exec gzip {}\;
+
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

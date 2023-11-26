@@ -1,8 +1,10 @@
 #!/bin/bash
 
-# Slackware build script for cgit
+# Slackware build script for cgit-pink
 # Copyright 2013-2020 Matteo Bernardini <ponce@slackbuilds.org>, Pisa, Italy
 # All rights reserved.
+#
+# C yustin@you-spam.org 2023	
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -23,8 +25,8 @@
 
 cd $(dirname $0) ; CWD=$(pwd)
 
-PRGNAM=cgit
-VERSION=${VERSION:-1.2.3}
+PRGNAM=cgit-pink
+VERSION=${VERSION:-1.4.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -66,7 +68,7 @@ else
 fi
 
 CGIT_VERSION=${CGIT_VERSION:-v$VERSION}
-GIT_VERSION=${GIT_VERSION:-2.26.2}
+GIT_VERSION=${GIT_VERSION:-2.37.1}
 
 DOCS="cgitrc.5.txt COPYING README $CWD/config/cgitrc.sample \
       $CWD/config/cgit-lighttpd.conf $CWD/config/cgit-httpd.conf \
@@ -93,7 +95,8 @@ sed -i Makefile \
     -e "s|-g -Wall -Igit|-Wall ${SLKCFLAGS} -Igit|" \
     -e "s|\/lib$|/lib${LIBDIRSUFFIX}|" \
     -e "s|(libdir)|(prefix)/share|" \
-    -e "s|/usr/local|/usr|" || exit 1
+    -e "s|/usr/local|/usr|" \
+    -e "/GIT_VER /s/=.*/= $(GIT_VERSION)/" || exit 1
 sed -e "s|@DOCROOT@|$DOCROOT|g" $CWD/config/cgit.conf > cgit.conf
 echo "CGIT_VERSION = $CGIT_VERSION" >> cgit.conf
 
@@ -102,8 +105,8 @@ rm -fR git
 tar xvf $CWD/git-$GIT_VERSION.tar.?z*
 mv git-* git
 
-make LUA_PKGCONFIG=luajit
-make install DESTDIR=$PKG
+make LUA_PKGCONFIG=luajit #CGIT_SCRIPT_PATH=/usr/libexec/cgit
+make install install-man DESTDIR=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -126,6 +129,8 @@ chmod 775 $PKG/var/cache/cgit
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+
+find $PKG/usr/share/man/ -type f -exec gzip -#9 {} \;
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
