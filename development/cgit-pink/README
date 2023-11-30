@@ -1,4 +1,4 @@
-cgit is a web interface (cgi) for git repositories, written in C.
+cgit-pink is a web interface (cgi) for git repositories, written in C.
 
 The folder /var/cache/cgit, must be owned by your webserver user.
 
