@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/syslog-ng/syslog-ng/releases/download/syslog-ng-4.3
 MD5SUM="4f3616e38cde5459b85c8ff25871134d"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="%README% eventlog virtualenv"
+REQUIRES="%README% poetry eventlog python3-virtualenv"
 MAINTAINER="yustin"
 EMAIL="yustin@you-spam.com"

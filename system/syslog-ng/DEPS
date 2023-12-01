@@ -1,0 +1,16 @@
+python3-poetry
+python3-virtualenv
+ERROR Missing dependencies:
+        hatch-vcs>=0.3
+
+python3-hatchling
+ERROR Missing dependencies:
+        trove-classifiers
+        pathspec>=0.10.1
+        editables>=0.3
+        pluggy>=1.0.0
+
+python3-trove-classifiers
+ERROR Missing dependencies:
+        calver
+

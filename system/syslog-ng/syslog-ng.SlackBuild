@@ -68,6 +68,13 @@ else
   LIBDIRSUFFIX=""
 fi
 
+# Build withhout Python support by default
+PYTHON3=${PYTHON3:-no}
+case "$PYTHON3" in
+         yes) PYTHON3='--enable-python' ;;
+           *) PYTHON3='--disable-python' ;;
+esac
+
 # Build withhout GeoIP support by default
 GEOIP=${GEOIP:-no}
 case "$GEOIP" in
@@ -134,6 +141,7 @@ find -L . \
 
 [ -f configure ] || ./autogen.sh
 
+PYTHON=/usr/bin/python3 \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
@@ -147,6 +155,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --enable-dynamic-linking \
   --with-embedded-crypto \
+  $PYTHON3 \
   $GEOIP $DEBUG $SQL $MONGODB \
   $RIEMANN $JAVA $SPOOF_SOURCE \
   --build=$ARCH-slackware-linux
@@ -163,8 +172,8 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 # We use our own configuration and keep original as sample
 mv $PKG/etc/syslog-ng/syslog-ng.conf $PKG/etc/syslog-ng/syslog-ng.conf.example
 
-# Append .new to config files
-for i in $PKG/etc/syslog-ng/*.conf ; do mv $i $i.new ; done
+## Append .new to config files
+#for i in $PKG/etc/syslog-ng/*.conf ; do mv $i $i.new ; done
 
 # Copy init script
 install -D -m0755 -oroot -groot $CWD/rc.syslog-ng $PKG/etc/rc.d/rc.syslog-ng.new
